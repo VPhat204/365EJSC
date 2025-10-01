@@ -1,3 +1,50 @@
+# JavaScript Modern Features Demo
+
+Đây là project demo các **tính năng hiện đại trong JavaScript (ES6+)**. Mục đích giúp học tập và thực hành các cú pháp và kỹ thuật quan trọng trong lập trình JavaScript.
+
+## Chức năng chính
+
+1. **Khai báo biến mới với `let` và `const`**  
+   - `let` cho phép khai báo biến có phạm vi block.  
+   - `const` khai báo hằng số, không thể gán lại giá trị.
+
+2. **Arrow Functions (Hàm mũi tên)**  
+   - Giúp viết hàm ngắn gọn hơn.  
+   - Không có `this` riêng, tránh lỗi khi sử dụng trong lập trình hướng đối tượng.
+
+3. **Template Literals (Chuỗi mẫu)**  
+   - Cho phép chèn biến vào chuỗi dễ dàng bằng dấu backtick thay vì dùng dấu cộng.
+
+4. **Destructuring Assignment (Phân rã đối tượng và mảng)**  
+   - Giúp truy xuất giá trị từ object và array nhanh chóng.
+
+5. **Default Parameters (Tham số mặc định trong hàm)**  
+   - Giúp tránh lỗi khi đối số không được truyền vào.
+
+6. **Rest Parameter & Spread Operator (`...`)**  
+   - **Rest Parameter:** gộp nhiều đối số thành một mảng.  
+   - **Spread Operator:** mở rộng mảng hoặc object.
+
+7. **Enhanced Object Literals (Cải tiến Object Literals)**  
+   - Viết gọn key-value khi key và biến có cùng tên.
+
+8. **Classes (Lớp) và kế thừa (Class & Inheritance)**  
+   - Hỗ trợ lập trình hướng đối tượng với tính năng lớp và kế thừa.
+
+9. **Modules (Mô-đun) trong JavaScript**  
+   - Giúp tổ chức mã tốt hơn với import/export.
+
+10. **Promises (Lời hứa) và xử lý bất đồng bộ**  
+    - Giải quyết vấn đề callback hell và quản lý luồng bất đồng bộ dễ dàng hơn.
+
+11. **Async/Await (Xử lý bất đồng bộ dễ hiểu hơn)**  
+    - Viết code bất đồng bộ trực quan và dễ hiểu hơn so với Promise.
+
+12. **Symbol và Set/Map (Kiểu dữ liệu mới)**  
+    - **Symbol:** giá trị duy nhất, tránh xung đột trong object.  
+    - **Map:** tối ưu hơn object cho lưu trữ key-value.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
