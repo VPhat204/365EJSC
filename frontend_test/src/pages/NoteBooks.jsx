@@ -4,9 +4,11 @@ import axios from "axios";
 function Notebook() {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState("");
+  const [newStatus, setNewStatus] = useState("todo");
+  const [newTag, setNewTag] = useState("work");
   const [editingId, setEditingId] = useState(null);
   const [editingText, setEditingText] = useState("");
-  const [newStatus, setNewStatus] = useState("todo"); // trạng thái khi thêm mới
+  const [editingTag, setEditingTag] = useState("work");
 
   const API_URL = "https://68df8ace898434f413580d49.mockapi.io/notes";
 
@@ -19,24 +21,29 @@ function Notebook() {
     const res = await axios.post(API_URL, {
       title: newNote,
       status: newStatus,
+      tag: newTag,
     });
     setNotes([...notes, res.data]);
     setNewNote("");
     setNewStatus("todo");
+    setNewTag("work");
   };
 
   const startEdit = (note) => {
     setEditingId(note.id);
     setEditingText(note.title);
+    setEditingTag(note.tag);
   };
 
   const saveEdit = async (id) => {
     const res = await axios.put(`${API_URL}/${id}`, {
       title: editingText,
+      tag: editingTag,
     });
     setNotes(notes.map((n) => (n.id === id ? res.data : n)));
     setEditingId(null);
     setEditingText("");
+    setEditingTag("work");
   };
 
   const deleteNote = async (id) => {
@@ -49,26 +56,65 @@ function Notebook() {
     setNotes(notes.map((n) => (n.id === id ? res.data : n)));
   };
 
+  // CSS
   const styles = {
-    container: { maxWidth: "700px", margin: "40px auto", padding: "20px", fontFamily: "Arial, sans-serif", lineHeight: 1.6 },
-    card: { background: "#f9f9f9", padding: "20px", borderRadius: "8px", boxShadow: "0 2px 8px rgba(0,0,0,0.1)" },
+    container: {
+      maxWidth: "750px",
+      margin: "40px auto",
+      padding: "20px",
+      fontFamily: "Arial, sans-serif",
+      lineHeight: 1.6,
+    },
+    card: {
+      background: "#f9f9f9",
+      padding: "20px",
+      borderRadius: "8px",
+      boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+    },
     form: { display: "flex", gap: "10px", marginBottom: "15px" },
-    input: { flex: 1, padding: "6px 8px", border: "1px solid #ccc", borderRadius: "4px" },
+    input: {
+      flex: 1,
+      padding: "6px 8px",
+      border: "1px solid #ccc",
+      borderRadius: "4px",
+    },
     list: { listStyle: "none", padding: 0 },
-    listItem: { margin: "8px 0", padding: "10px", background: "#f9f9f9", borderRadius: "6px", display: "flex", alignItems: "center", gap: "8px", boxShadow: "0 2px 6px rgba(0,0,0,0.05)" },
-    btn: { border: "none", padding: "6px 10px", borderRadius: "4px", color: "white", cursor: "pointer" },
+    listItem: {
+      margin: "8px 0",
+      padding: "10px",
+      background: "#f9f9f9",
+      borderRadius: "6px",
+      display: "flex",
+      alignItems: "center",
+      gap: "8px",
+      boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
+    },
+    btn: {
+      border: "none",
+      padding: "6px 10px",
+      borderRadius: "4px",
+      color: "white",
+      cursor: "pointer",
+    },
     add: { background: "#28a745" },
     edit: { background: "#007bff" },
     delete: { background: "#dc3545" },
     save: { background: "#fd7e14" },
     cancel: { background: "#6c757d" },
-    select: { padding: "5px", borderRadius: "4px", border: "1px solid #ccc" }
+    select: { padding: "5px", borderRadius: "4px", border: "1px solid #ccc" },
+    tagBadge: {
+      padding: "3px 8px",
+      borderRadius: "12px",
+      fontSize: "12px",
+      fontWeight: "bold",
+      color: "white",
+    },
   };
 
   return (
     <div style={styles.container}>
       <div style={styles.card}>
-        <h2>My Notebook</h2>
+        <h2>📝 My Notebook</h2>
 
         <div style={styles.form}>
           <input
@@ -78,6 +124,15 @@ function Notebook() {
             onChange={(e) => setNewNote(e.target.value)}
             style={styles.input}
           />
+          <select
+            value={newTag}
+            onChange={(e) => setNewTag(e.target.value)}
+            style={styles.select}
+          >
+            <option value="work">💼 Công việc</option>
+            <option value="study">📘 Học tập</option>
+            <option value="personal">🏠 Cá nhân</option>
+          </select>
           <button style={{ ...styles.btn, ...styles.add }} onClick={addNote}>
             Thêm
           </button>
@@ -94,6 +149,15 @@ function Notebook() {
                     onChange={(e) => setEditingText(e.target.value)}
                     style={styles.input}
                   />
+                  <select
+                    value={editingTag}
+                    onChange={(e) => setEditingTag(e.target.value)}
+                    style={styles.select}
+                  >
+                    <option value="work">💼 Công việc</option>
+                    <option value="study">📘 Học tập</option>
+                    <option value="personal">🏠 Cá nhân</option>
+                  </select>
                   <button
                     style={{ ...styles.btn, ...styles.save }}
                     onClick={() => saveEdit(note.id)}
@@ -109,7 +173,35 @@ function Notebook() {
                 </>
               ) : (
                 <>
-                  <span style={{ flex: 1, fontSize: "15px" }}>{note.title}</span>
+                  <span style={{ flex: 1, fontSize: "15px" }}>
+                    {note.title}
+                  </span>
+                  <span
+                    style={{
+                      ...styles.tagBadge,
+                      background:
+                        note.tag === "work"
+                          ? "#007bff"
+                          : note.tag === "study"
+                          ? "#28a745"
+                          : "#ffc107",
+                    }}
+                  >
+                    {note.tag === "work"
+                      ? "Công việc"
+                      : note.tag === "study"
+                      ? "Học tập"
+                      : "Cá nhân"}
+                  </span>
+                  <select
+                    value={note.status}
+                    onChange={(e) => changeStatus(note.id, e.target.value)}
+                    style={styles.select}
+                  >
+                    <option value="todo">⏳ Cần làm</option>
+                    <option value="doing">🔔 Đang làm</option>
+                    <option value="done">✅ Đã xong</option>
+                  </select>
                   <button
                     style={{ ...styles.btn, ...styles.edit }}
                     onClick={() => startEdit(note)}
@@ -122,15 +214,6 @@ function Notebook() {
                   >
                     Xóa
                   </button>
-                  <select
-                    value={note.status}
-                    onChange={(e) => changeStatus(note.id, e.target.value)}
-                    style={styles.select}
-                  >
-                    <option value="todo">⏳ Cần làm</option>
-                    <option value="doing">🔔 Đang làm</option>
-                    <option value="done">✅ Đã xong</option>
-                  </select>
                 </>
               )}
             </li>
