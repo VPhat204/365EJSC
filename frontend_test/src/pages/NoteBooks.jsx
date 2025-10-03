@@ -56,58 +56,79 @@ function Notebook() {
     setNotes(notes.map((n) => (n.id === id ? res.data : n)));
   };
 
-  // CSS
+  // Responsive CSS
   const styles = {
     container: {
-      maxWidth: "750px",
-      margin: "40px auto",
-      padding: "20px",
+      maxWidth: "95%",
+      margin: "20px auto",
+      padding: "10px",
       fontFamily: "Arial, sans-serif",
       lineHeight: 1.6,
     },
     card: {
-      background: "#f9f9f9",
-      padding: "20px",
-      borderRadius: "8px",
+      background: "#fff",
+      padding: "15px",
+      borderRadius: "10px",
       boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
     },
-    form: { display: "flex", gap: "10px", marginBottom: "15px" },
-    input: {
-      flex: 1,
-      padding: "6px 8px",
-      border: "1px solid #ccc",
-      borderRadius: "4px",
+    form: {
+      display: "flex",
+      flexWrap: "wrap",
+      gap: "10px",
+      marginBottom: "15px",
     },
-    list: { listStyle: "none", padding: 0 },
+    input: {
+      flex: "1 1 200px",
+      padding: "8px 10px",
+      border: "1px solid #ccc",
+      borderRadius: "6px",
+      fontSize: "1rem",
+    },
+    list: { listStyle: "none", padding: 0, margin: 0 },
     listItem: {
       margin: "8px 0",
-      padding: "10px",
+      padding: "12px",
       background: "#f9f9f9",
-      borderRadius: "6px",
+      borderRadius: "8px",
       display: "flex",
+      flexWrap: "wrap",
       alignItems: "center",
-      gap: "8px",
-      boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
+      gap: "10px",
+      boxShadow: "0 1px 5px rgba(0,0,0,0.05)",
     },
     btn: {
       border: "none",
-      padding: "6px 10px",
-      borderRadius: "4px",
+      padding: "8px 12px",
+      borderRadius: "6px",
       color: "white",
       cursor: "pointer",
+      fontSize: "0.9rem",
     },
     add: { background: "#28a745" },
     edit: { background: "#007bff" },
     delete: { background: "#dc3545" },
     save: { background: "#fd7e14" },
     cancel: { background: "#6c757d" },
-    select: { padding: "5px", borderRadius: "4px", border: "1px solid #ccc" },
+    select: {
+      padding: "7px",
+      borderRadius: "6px",
+      border: "1px solid #ccc",
+      fontSize: "0.9rem",
+    },
     tagBadge: {
-      padding: "3px 8px",
-      borderRadius: "12px",
-      fontSize: "12px",
+      padding: "4px 10px",
+      borderRadius: "20px",
+      fontSize: "0.8rem",
       fontWeight: "bold",
       color: "white",
+      minWidth: "70px",
+      textAlign: "center",
+    },
+    noteTitle: {
+      flex: 1,
+      fontSize: "1rem",
+      minWidth: "150px",
+      wordBreak: "break-word",
     },
   };
 
@@ -116,6 +137,7 @@ function Notebook() {
       <div style={styles.card}>
         <h2>📝 My Notebook</h2>
 
+        {/* Form thêm note */}
         <div style={styles.form}>
           <input
             type="text"
@@ -138,6 +160,7 @@ function Notebook() {
           </button>
         </div>
 
+        {/* Danh sách note */}
         <ul style={styles.list}>
           {notes.map((note) => (
             <li key={note.id} style={styles.listItem}>
@@ -173,9 +196,7 @@ function Notebook() {
                 </>
               ) : (
                 <>
-                  <span style={{ flex: 1, fontSize: "15px" }}>
-                    {note.title}
-                  </span>
+                  <span style={styles.noteTitle}>{note.title}</span>
                   <span
                     style={{
                       ...styles.tagBadge,
