@@ -1,22 +1,13 @@
-import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Products from "./pages/Products";
+import { Link } from "react-router-dom";
 
-function App() {
+function Navbar() {
   return (
-    <div>
-      <Navbar />
-      <div style={{ padding: "20px" }}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/products" element={<Products />} />
-        </Routes>
-      </div>
-    </div>
+    <nav style={{ padding: "10px", background: "#333" }}>
+      <Link to="/" style={{ color: "white", margin: "0 10px" }}>Home</Link>
+      <Link to="/about" style={{ color: "white", margin: "0 10px" }}>About</Link>
+      <Link to="/products" style={{ color: "white", margin: "0 10px" }}>Products</Link>
+    </nav>
   );
 }
 
-export default App;
+export default Navbar;
