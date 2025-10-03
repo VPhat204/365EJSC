@@ -6,8 +6,10 @@ function Notebook() {
   const [newNote, setNewNote] = useState("");
   const [editingId, setEditingId] = useState(null);
   const [editingText, setEditingText] = useState("");
+  const [newStatus, setNewStatus] = useState("todo"); // trạng thái khi thêm mới
 
-  const API_URL = "https://68df8ace898434f413580d49.mockapi.io/notes"; 
+  const API_URL = "https://68df8ace898434f413580d49.mockapi.io/notes";
+
   useEffect(() => {
     axios.get(API_URL).then((res) => setNotes(res.data));
   }, []);
@@ -16,10 +18,11 @@ function Notebook() {
     if (newNote.trim() === "") return;
     const res = await axios.post(API_URL, {
       title: newNote,
-      status: "todo",
+      status: newStatus,
     });
     setNotes([...notes, res.data]);
     setNewNote("");
+    setNewStatus("todo");
   };
 
   const startEdit = (note) => {
@@ -41,21 +44,9 @@ function Notebook() {
     setNotes(notes.filter((n) => n.id !== id));
   };
 
-  const toggleStatus = async (id, currentStatus) => {
-    const nextStatus =
-      currentStatus === "todo"
-        ? "doing"
-        : currentStatus === "doing"
-        ? "done"
-        : "todo";
-    const res = await axios.put(`${API_URL}/${id}`, { status: nextStatus });
+  const changeStatus = async (id, status) => {
+    const res = await axios.put(`${API_URL}/${id}`, { status });
     setNotes(notes.map((n) => (n.id === id ? res.data : n)));
-  };
-
-  const statusLabel = {
-    todo: { text: "⏳ Cần làm", color: "#6c757d" },
-    doing: { text: "🔔 Đang làm", color: "#fd7e14" },
-    done: { text: "✅ Đã xong", color: "#28a745" },
   };
 
   const styles = {
@@ -71,26 +62,27 @@ function Notebook() {
     delete: { background: "#dc3545" },
     save: { background: "#fd7e14" },
     cancel: { background: "#6c757d" },
-    statusBtn: { background: "#17a2b8" },
-    badge: { padding: "3px 8px", borderRadius: "12px", fontSize: "13px", fontWeight: "bold", color: "white" }
+    select: { padding: "5px", borderRadius: "4px", border: "1px solid #ccc" }
   };
 
   return (
     <div style={styles.container}>
       <div style={styles.card}>
         <h2>My Notebook</h2>
-      <div style={styles.form}>
-        <input
-          type="text"
-          placeholder="Nhập ghi chú..."
-          value={newNote}
-          onChange={(e) => setNewNote(e.target.value)}
-          style={styles.input}
-        />
-        <button style={{ ...styles.btn, ...styles.add }} onClick={addNote}>
-          Thêm
-        </button>
-      </div>
+
+        <div style={styles.form}>
+          <input
+            type="text"
+            placeholder="Nhập ghi chú..."
+            value={newNote}
+            onChange={(e) => setNewNote(e.target.value)}
+            style={styles.input}
+          />
+          <button style={{ ...styles.btn, ...styles.add }} onClick={addNote}>
+            Thêm
+          </button>
+        </div>
+
         <ul style={styles.list}>
           {notes.map((note) => (
             <li key={note.id} style={styles.listItem}>
@@ -118,20 +110,6 @@ function Notebook() {
               ) : (
                 <>
                   <span style={{ flex: 1, fontSize: "15px" }}>{note.title}</span>
-                  <span
-                    style={{
-                      ...styles.badge,
-                      background: statusLabel[note.status].color
-                    }}
-                  >
-                    {statusLabel[note.status].text}
-                  </span>
-                  <button
-                    style={{ ...styles.btn, ...styles.statusBtn }}
-                    onClick={() => toggleStatus(note.id)}
-                  >
-                    Đổi trạng thái
-                  </button>
                   <button
                     style={{ ...styles.btn, ...styles.edit }}
                     onClick={() => startEdit(note)}
@@ -144,6 +122,15 @@ function Notebook() {
                   >
                     Xóa
                   </button>
+                  <select
+                    value={note.status}
+                    onChange={(e) => changeStatus(note.id, e.target.value)}
+                    style={styles.select}
+                  >
+                    <option value="todo">⏳ Cần làm</option>
+                    <option value="doing">🔔 Đang làm</option>
+                    <option value="done">✅ Đã xong</option>
+                  </select>
                 </>
               )}
             </li>
