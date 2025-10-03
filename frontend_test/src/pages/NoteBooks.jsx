@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 function Notebook() {
   const [notes, setNotes] = useState([]);
@@ -6,19 +7,18 @@ function Notebook() {
   const [editingId, setEditingId] = useState(null);
   const [editingText, setEditingText] = useState("");
 
+  const API_URL = "https://68df87fa898434f413580380.mockapi.io/notes"; 
   useEffect(() => {
-    const savedNotes = JSON.parse(localStorage.getItem("notes")) || [];
-    setNotes(savedNotes);
+    axios.get(API_URL).then((res) => setNotes(res.data));
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("notes", JSON.stringify(notes));
-  }, [notes]);
-
-  const addNote = () => {
+  const addNote = async () => {
     if (newNote.trim() === "") return;
-    const newItem = { id: Date.now(), title: newNote, status: "todo" };
-    setNotes([...notes, newItem]);
+    const res = await axios.post(API_URL, {
+      title: newNote,
+      status: "todo",
+    });
+    setNotes([...notes, res.data]);
     setNewNote("");
   };
 
@@ -27,41 +27,35 @@ function Notebook() {
     setEditingText(note.title);
   };
 
-  const saveEdit = (id) => {
-    setNotes(
-      notes.map((note) =>
-        note.id === id ? { ...note, title: editingText } : note
-      )
-    );
+  const saveEdit = async (id) => {
+    const res = await axios.put(`${API_URL}/${id}`, {
+      title: editingText,
+    });
+    setNotes(notes.map((n) => (n.id === id ? res.data : n)));
     setEditingId(null);
     setEditingText("");
   };
 
-  const deleteNote = (id) => {
-    setNotes(notes.filter((note) => note.id !== id));
+  const deleteNote = async (id) => {
+    await axios.delete(`${API_URL}/${id}`);
+    setNotes(notes.filter((n) => n.id !== id));
   };
 
-  const toggleStatus = (id) => {
-    setNotes(
-      notes.map((note) => {
-        if (note.id === id) {
-          let nextStatus =
-            note.status === "todo"
-              ? "doing"
-              : note.status === "doing"
-              ? "done"
-              : "todo";
-          return { ...note, status: nextStatus };
-        }
-        return note;
-      })
-    );
+  const toggleStatus = async (id, currentStatus) => {
+    const nextStatus =
+      currentStatus === "todo"
+        ? "doing"
+        : currentStatus === "doing"
+        ? "done"
+        : "todo";
+    const res = await axios.put(`${API_URL}/${id}`, { status: nextStatus });
+    setNotes(notes.map((n) => (n.id === id ? res.data : n)));
   };
 
   const statusLabel = {
     todo: { text: "⏳ Cần làm", color: "#6c757d" },
     doing: { text: "🔔 Đang làm", color: "#fd7e14" },
-    done: { text: "✅ Đã xong", color: "#28a745" }
+    done: { text: "✅ Đã xong", color: "#28a745" },
   };
 
   const styles = {
