@@ -7,7 +7,7 @@ function Notebook() {
   const [editingId, setEditingId] = useState(null);
   const [editingText, setEditingText] = useState("");
 
-  const API_URL = "https://68df87fa898434f413580380.mockapi.io/notes"; 
+  const API_URL = "https://68df8ace898434f413580d49.mockapi.io/notes"; 
   useEffect(() => {
     axios.get(API_URL).then((res) => setNotes(res.data));
   }, []);
