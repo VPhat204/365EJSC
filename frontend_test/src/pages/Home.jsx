@@ -34,7 +34,7 @@ function Home() {
       color: "#fff",
       cursor: "pointer",
       margin: "10px",
-      textDecoration: "none", // bỏ gạch chân cho Link
+      textDecoration: "none", 
       display: "inline-block",
       transition: "0.3s",
     },
@@ -63,6 +63,14 @@ function Home() {
             onMouseOut={(e) => (e.target.style.background = "#2196F3")}
           >
             📖 Tạo NoteBook
+          </Link>
+          <Link
+            to="/study"
+            style={{ ...styles.button, background: "#FF9800" }}
+            onMouseOver={(e) => (e.target.style.background = "#F57C00")}
+            onMouseOut={(e) => (e.target.style.background = "#FF9800")}
+          >
+            📖 Tạo Lịch Học
           </Link>
         </div>
       </div>

@@ -3,6 +3,7 @@ import Navbar from "./components/NavBar";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Products from "./pages/NoteBooks";
+import StudySchedule from "./pages/StudySchedule";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/notebook" element={<Products />} />
+          <Route path="/study" element={<StudySchedule />} />
         </Routes>
       </div>
     </div>

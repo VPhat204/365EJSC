@@ -56,7 +56,6 @@ function Notebook() {
     setNotes(notes.map((n) => (n.id === id ? res.data : n)));
   };
 
-  // Responsive CSS
   const styles = {
     container: {
       maxWidth: "95%",
@@ -137,7 +136,6 @@ function Notebook() {
       <div style={styles.card}>
         <h2>📝 My Notebook</h2>
 
-        {/* Form thêm note */}
         <div style={styles.form}>
           <input
             type="text"
@@ -160,7 +158,6 @@ function Notebook() {
           </button>
         </div>
 
-        {/* Danh sách note */}
         <ul style={styles.list}>
           {notes.map((note) => (
             <li key={note.id} style={styles.listItem}>
