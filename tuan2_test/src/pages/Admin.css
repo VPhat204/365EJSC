@@ -1,0 +1,110 @@
+.admin-container {
+  max-width: 800px;
+  width: 90%;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.admin-title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 1.8rem;
+}
+
+.admin-todo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-todo-item {
+  background: #fff;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border-left: 6px solid #007bff;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-todo-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.admin-todo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.admin-todo-title {
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.admin-todo-status {
+  padding: 3px 8px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 12px;
+  text-transform: capitalize;
+  margin-top: 5px;
+}
+
+.admin-todo-status.completed {
+  background-color: #28a745;
+}
+
+.admin-todo-status.pending {
+  background-color: #ffc107;
+}
+
+.admin-todo-info {
+  font-size: 14px;
+  color: #555;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.admin-todo-info span {
+  margin-top: 5px;
+}
+
+@media (max-width: 768px) {
+  .admin-todo-header, .admin-todo-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .admin-todo-status {
+    margin-top: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-title {
+    font-size: 1.5rem;
+  }
+
+  .admin-todo-title {
+    font-size: 16px;
+  }
+
+  .admin-todo-info {
+    font-size: 13px;
+  }
+
+  .admin-todo-item {
+    padding: 12px 15px;
+  }
+}

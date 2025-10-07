@@ -1,36 +1,42 @@
 body {
   font-family: "Segoe UI", sans-serif;
   background: #f3f4f6;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 40px;
+  margin: 0;         
+  padding: 0; 
+  text-align: center;
 }
 
 .todo-container {
   background: white;
   padding: 30px;
   border-radius: 12px;
-  width: 400px;
+  display: inline-block;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  max-width: 800px;
+  width: 90%;
+  box-sizing: border-box;
 }
 
 h1 {
-  text-align: center;
   color: #333;
+  font-size: 2em;
 }
 
 form {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 15px;
+  justify-content: center;
 }
 
 input {
-  flex: 1;
   padding: 8px;
   border-radius: 6px;
   border: 1px solid #ccc;
+  font-size: 1em;
+  box-sizing: border-box;
 }
 
 button {
@@ -41,6 +47,7 @@ button {
   padding: 8px 12px;
   cursor: pointer;
   transition: background 0.2s;
+  font-size: 1em;
 }
 
 button:hover {
@@ -54,6 +61,7 @@ ul {
 
 li {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 8px;
@@ -61,13 +69,16 @@ li {
 
 .filter-buttons {
   display: flex;
-  justify-content: space-around;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
   margin-bottom: 15px;
 }
 
 .filter-buttons button {
   background: #e5e7eb;
   color: #111;
+  flex: 1 1 100px;
 }
 
 .filter-buttons button.reset {
@@ -77,4 +88,31 @@ li {
 
 .filter-buttons button:hover {
   opacity: 0.9;
+}
+
+@media (max-width: 500px) {
+  .todo-container {
+    padding: 20px;
+    width: 95%;
+  }
+
+  form {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  input, button {
+    width: 100%;
+  }
+
+  li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .filter-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
 }

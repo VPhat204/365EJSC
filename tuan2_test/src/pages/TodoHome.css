@@ -102,7 +102,7 @@ form button:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 16px;
+  padding: 14px 12px;
   margin-bottom: 12px;
   background: #f9fafb;
   border-radius: 10px;
@@ -116,7 +116,6 @@ form button:hover {
 
 .todo-list span {
   flex: 1;
-  margin-left: 10px;
   font-size: 15px;
   color: #374151;
 }
