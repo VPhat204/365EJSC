@@ -1,11 +1,8 @@
-import Home from "../src/pages/Home";
+import React from "react";
+import TodoHome from "./pages/TodoHome";
 
-function App() {
-  return (
-    <div>
-      <h1>Mini React + TypeScript App</h1>
-      <Home />
-    </div>
-  );
-}
-export default App
+const App = () => {
+  return <TodoHome />;
+};
+
+export default App;
