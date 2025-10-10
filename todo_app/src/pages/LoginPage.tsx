@@ -92,6 +92,9 @@ const LoginPage: React.FC = () => {
       Login
     </button>
     {error && <p style={{ color: "red" }}>{error}</p>}
+    <p>Admin: admin 123456</p>
+    <p>User1: user1 abc123</p>
+    <p>User2: user2 abc456</p>
   </form>
   );
 };
