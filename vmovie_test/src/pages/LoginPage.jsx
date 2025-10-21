@@ -62,6 +62,9 @@ const LoginPage = () => {
           <p className="another-form">
             Chưa có tài khoản? <Link to="/register">Đăng ký</Link>
           </p>
+          <p className="another-form">
+            Admin Account: admin@gmail.com admin123
+          </p>
         </div>
       </div>
     </div>
