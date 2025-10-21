@@ -1,0 +1,245 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100vw;
+  left: 0;
+  align-items: center;
+  padding: 10px 40px;
+  background: rgba(0, 0, 0, 0.25); 
+  backdrop-filter: blur(8px);
+  color: #fff;
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+.header.scrolled {
+  background: rgba(0, 0, 0, 0.85); 
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-width: 380px;
+}
+
+.logo img {
+  height: 45px;
+  width: auto;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 10px 40px 10px 15px;
+  border-radius: 25px;
+  color: #fff;
+  width: 250px;
+  font-size: 14px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.search-input::placeholder {
+  color: #ddd;
+}
+
+.search-input:focus {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #ffcc00;
+}
+
+.search-icon {
+  position: absolute;
+  right: 15px;
+  color: #ccc;
+  font-size: 18px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.nav a:hover {
+  color: #ffcc00;
+}
+
+.dropdown a {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.login-btn {
+  background: linear-gradient(90deg, #ffcc00, #ff9900);
+  color: #000;
+  border: none;
+  border-radius: 25px;
+  padding: 8px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+  background: linear-gradient(90deg, #ffd633, #ffaa00);
+  transform: translateY(-1px);
+}
+
+.login-style{
+  text-decoration: none;
+  color: black;
+}
+
+.user-dropdown {
+  position: relative;
+}
+
+.user-btn {
+  background: transparent;
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background: rgba(255, 255, 255, 0.1); 
+  backdrop-filter: blur(10px); 
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 100;
+  min-width: 160px;
+  transition: all 0.3s ease;
+}
+
+.dropdown-menu input {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  outline: none;
+}
+
+.dropdown-menu input::placeholder {
+  color: #ccc;
+}
+
+.dropdown-menu button {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.dropdown-menu button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.dropdown-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.dropdown-btn:hover {
+  color: #ccc;
+}
+
+.dropdown-menu-nav {
+  position: absolute;
+  top: 100%;
+  background: rgba(20, 20, 20, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+  padding: 10px;
+}
+
+.dropdown-menu-div {
+  display: flex;
+  gap: 40px;
+}
+
+.dropdown-menu-nav a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: 8px 0;
+  transition: background 0.3s;
+}
+
+.dropdown-menu-nav a:hover {
+  color: #ffcc00;
+}
+
+
+@media (max-width: 900px) {
+  .search-bar {
+    display: none;
+  }
+
+  .nav {
+    gap: 18px;
+  }
+
+  .login-btn {
+    padding: 6px 14px;
+    font-size: 13px;
+  }
+}
