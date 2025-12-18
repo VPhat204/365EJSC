@@ -1,7 +1,7 @@
 import React from "react";
 import Banner from "../../components/Banner";
 import MovieList from "../../components/MovieList";
-import "./style.css";
+import "./styles.css";
 
 function Home() {
   return (
