@@ -142,6 +142,57 @@
   border-radius: 10px;
 }
 
+.movie-rating-section {
+  margin-top: 16px;
+  padding: 14px 18px;
+  background: #1a1a1a;
+  border-radius: 10px;
+}
+
+.movie-rating-section p {
+  margin: 6px 0;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.star-rating {
+  display: flex;
+  gap: 6px;
+  margin: 10px 0 12px;
+}
+
+.star {
+  font-size: 22px;
+  color: #444;
+  cursor: pointer;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.star:hover {
+  transform: scale(1.15);
+}
+
+.star.active {
+  color: #ffc107;
+}
+
+.rate-btn {
+  background-color: #ff5c5c;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s;
+}
+
+.rate-btn:hover {
+  background-color: #ff8888;
+}
+
+
 @media (max-width: 768px) {
   .movie-detail {
     flex-direction: column;

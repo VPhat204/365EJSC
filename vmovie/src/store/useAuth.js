@@ -1,85 +1,148 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import axios from "axios";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-const AuthContext = createContext();
+const BASE_URL = "https://68ef4da1b06cc802829cd64a.mockapi.io";
 
-export const AuthProvider = ({ children }) => {
-  const [users, setUsers] = useState([]);
-  const [user, setUser] = useState(() => {
-    const stored = localStorage.getItem("user");
-    return stored ? JSON.parse(stored) : null;
+
+function getUser() {
+  const data = localStorage.getItem("user");
+  return data ? JSON.parse(data) : null;
+}
+
+function setUser(user) {
+  localStorage.setItem("user", JSON.stringify(user));
+}
+
+function clearUser() {
+  localStorage.removeItem("user");
+}
+
+export function useCurrentUser() {
+  return useQuery({
+    queryKey: ["user"],
+    queryFn: () => getUser(),
   });
+}
 
-  useEffect(() => {
-    let storedUsers = JSON.parse(localStorage.getItem("users") || "[]");
+export function useRegister() {
+  const queryClient = useQueryClient();
 
-    const adminId = "admin-001";
+  return useMutation({
+    mutationFn: async ({ email, password, username }) => {
+      const { data } = await axios.post(`${BASE_URL}/account`, {
+        email,
+        password,
+        username,
+        role: "user",
+        avatar:
+          "https://i.pinimg.com/736x/84/ab/e1/84abe170341d6b31c1ee14aa2eb37922.jpg",
+      });
 
-    if (!storedUsers.some(u => u.role === "admin")) {
-      const admin = {
-        id: adminId,
-        username: "Admin",
-        email: "admin@gmail.com",
-        password: "admin123",
-        role: "admin",
-        avatar: "https://cdn-icons-png.flaticon.com/512/847/847969.png",
-      };
-      storedUsers.push(admin);
-      localStorage.setItem("users", JSON.stringify(storedUsers));
-    }
+      setUser(data);
+      return data;
+    },
 
-    setUsers(storedUsers);
-  }, []);
+    onSuccess: () => {
+      queryClient.invalidateQueries(["user"]);
+    },
+  });
+}
 
-  const register = (email, password, username) => {
-    if (users.find(u => u.email === email)) {
-      throw new Error("Email đã tồn tại!");
-    }
 
-    const newUser = {
-      id: Date.now().toString(),
-      username,
-      email,
-      password,
-      role: "user",
-      avatar: "https://cdn-icons-png.flaticon.com/512/847/847969.png",
-    };
+export function useLogin() {
+  const queryClient = useQueryClient();
 
-    const updatedUsers = [...users, newUser];
-    setUsers(updatedUsers);
-    localStorage.setItem("users", JSON.stringify(updatedUsers));
+  return useMutation({
+    mutationFn: async ({ email, password }) => {
+      const { data } = await axios.get(`${BASE_URL}/account`);
+
+      const foundUser = data.find(
+        (u) =>
+          u.email.toLowerCase() === email.toLowerCase() &&
+          u.password === password
+      );
+
+      if (!foundUser) throw new Error("Sai email hoặc mật khẩu");
+
+      setUser(foundUser);
+      return foundUser;
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries(["user"]);
+    },
+  });
+}
+
+
+export function useLogout() {
+  const queryClient = useQueryClient();
+
+  return () => {
+    clearUser();
+    queryClient.invalidateQueries(["user"]);
   };
+}
 
-  const login = (email, password) => {
-    if (!users.length) throw new Error("Danh sách user chưa sẵn sàng!");
+export function useUpdateUser() {
+  const queryClient = useQueryClient();
 
-    const foundUser = users.find(u => u.email === email && u.password === password);
-    if (!foundUser) throw new Error("Sai email hoặc mật khẩu!");
+  return useMutation({
+    mutationFn: async ({ id, updates }) => {
+      const { data } = await axios.put(`${BASE_URL}/account/${id}`, updates);
 
-    setUser(foundUser);
-    localStorage.setItem("user", JSON.stringify(foundUser));
-    return foundUser;
+      setUser(data);
+      return data;
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries(["user"]);
+    },
+  });
+}
+
+export function useUpdateUsername() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ id, newName }) => {
+      const updated = { username: newName };
+      const { data } = await axios.put(`${BASE_URL}/account/${id}`, updated);
+
+      setUser(data);
+      return data;
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries(["user"]);
+    },
+  });
+}
+
+
+export function useAuth() {
+  const { data: user } = useCurrentUser();
+  const register = useRegister();
+  const login = useLogin();
+  const logout = useLogout();
+  const updateUser = useUpdateUser();
+  const updateUsername = useUpdateUsername();
+
+  return {
+    user,
+    register: (email, pass, name) =>
+      register.mutateAsync({ email, password: pass, username: name }),
+
+    login: (email, pass) => login.mutateAsync({ email, password: pass }),
+
+    logout: () => logout(),
+
+    updateUser: (id, updates) =>
+      updateUser.mutateAsync({ id, updates }),
+
+    updateUsername: (newName) => {
+      if (!user) return;
+      return updateUsername.mutateAsync({ id: user.id, newName });
+    },
   };
-
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem("user");
-  };
-
-  const updateUsername = (newName) => {
-    if (!user) return;
-    const updated = { ...user, username: newName };
-    const updatedUsers = users.map(u => u.id === user.id ? updated : u);
-    setUsers(updatedUsers);
-    setUser(updated);
-    localStorage.setItem("users", JSON.stringify(updatedUsers));
-    localStorage.setItem("user", JSON.stringify(updated));
-  };
-
-  return (
-    <AuthContext.Provider value={{ user, register, login, logout, updateUsername }}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
-
-export const useAuth = () => useContext(AuthContext);
+}
