@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./style.css";
+import "./styles.css";
 
 const MovieDetail = () => {
   const { id } = useParams();
