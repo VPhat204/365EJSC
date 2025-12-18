@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import "./style.css";
+import "./styles.css";
 import { FaUser } from "react-icons/fa";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { FiSearch } from "react-icons/fi";

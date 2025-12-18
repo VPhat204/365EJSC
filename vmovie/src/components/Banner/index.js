@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./style.css";
+import "./styles.css";
 import { FaPlay, FaHeart } from "react-icons/fa";
 import { useMovies } from "../../context/MovieContext";
 import { useNavigate } from "react-router-dom";

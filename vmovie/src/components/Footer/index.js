@@ -1,5 +1,5 @@
 import React from "react";
-import "./style.css";
+import "./styles.css";
 import logo from "../../assets/vmovie.png";
 import { Link } from "react-router-dom";
 

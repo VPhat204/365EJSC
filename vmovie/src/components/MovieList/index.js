@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
-import "./style.css";
+import "./styles.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
