@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./style.css";
+import "./styles.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
